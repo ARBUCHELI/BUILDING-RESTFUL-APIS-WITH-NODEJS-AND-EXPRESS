@@ -1,0 +1,24 @@
+INITIAL SERVER BUILD
+********************
+
+* RESTful APIs refresher
+------------------------
+
+- RESTful API: With to transact with a Backend, using HTTP transactions.
+	We use a series of calls:
+		- GET
+		- POST
+		- PUT
+		- DELETE
+
+	with a html address to transact with our backend and its data, So when a Frontend needs to make transactions with a Backend, it makes a call.
+	For example GET with a html endpoint that looks like an URL, and the API responds with success or failure with data if need be. 
+
+		- GET: Pulls (Gets) the data from the backend.
+		- POST: Adds new data.
+		- PUT: Updates the data.
+		- DELETE: Deletes the data.
+
+
+* Initial server setup
+

@@ -1,3 +1,8 @@
 INTRODUCTION
-------------
+************
+
+1) Exploring tools for testing the API and its database.
+2) Set the stage for our API with our initial Express server and routing endpoints.
+3) Set up a mongo database along with its schema.
+4) Create each API endpoints to add, update, delete, and pull data from our backend.
 

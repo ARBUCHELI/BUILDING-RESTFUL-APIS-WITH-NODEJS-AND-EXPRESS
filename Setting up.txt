@@ -1,0 +1,84 @@
+SETTING UP
+**********
+
+* Introduction to APIS and the libraries
+----------------------------------------
+
+- API: Application Programming Interface (Way to offer an interface to a program, and in most cases, data from another program).
+
+- Node.js: Will be the basis of our server (Used along with Express).
+
+- Express.js: Will allow us to build our web server and the API endpoints.
+
+- Babel: JavaScript compiler.
+
+- MongoDB: Database used to persist our data.
+
+
+* Introduction to Postman
+-------------------------
+
+- Postman: Frontend used for testing APIs:
+	Very important from Postman: 
+		- Collections.
+		- Request methods:
+			- Get
+			- Post
+			- Put
+			- Patch
+			- Request
+
+
+* Install Node and Express
+--------------------------
+ 
+- npn init: Used to initialize the package.json file.
+- npm i express: Used to install express.
+
+
+* Install Mongo
+---------------
+
+- Mongoose: Used for modeling the database and bring several built-in tools to help us with validation, business logic, hooks, etc.
+- For installing Mongoose: npm i mongoose
+
+
+* Basic Babel Setup
+-------------------
+
+- Babel: Tool that help us compile without any issues when we are using the latest syntax.
+
+- We want to save some Babel tools as Dev dependencies:
+	- @babel/cli: Allows us to do a script. 
+	- @babel/preset-env: Allows us to use the latest version of JavaScript.
+		npm i --save-dev @babel/core @babel/cli @babel/node @babel/preset-env
+
+	- body-parser: Package from Express which will allow us to parse our code.
+
+
+* Create a configuration file for Babel
+---------------------------------------
+Used to compile the latest version of JavaScript into readable code for the server.
+
+
+.babelrc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
