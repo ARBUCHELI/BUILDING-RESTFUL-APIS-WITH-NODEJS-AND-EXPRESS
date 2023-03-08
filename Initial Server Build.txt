@@ -21,4 +21,176 @@ INITIAL SERVER BUILD
 
 
 * Initial server setup
+----------------------
+
+	- Nodemon: Used to use npm start and restart the server, whenever we change the code.  In order to do this, we need to change test to start in the package.json file, 
+		"start": "nodemon ./index.js --exec babel-node"
+
+	- Create the index.js file:
+		const app = express(); -> This runs the express server.
+		
+		index.js
+
+		import express from 'express';
+
+		const app = express();
+		const PORT = 3000;
+
+		//This is the first endpoint
+		app.get('/', (req, res) => {
+    			res.send(`Node and Express server is running on port ${PORT}`);
+		});
+
+		app.listen(PORT, () => {
+    			console.log(`Your server is running on port ${PORT}`);
+		})
+
+
+* Initial server files and folders
+----------------------------------
+
+- Folder Structure: Put everything in a source folder: 
+	- Controllers: Functions that will allow us to get information into the endpoints, and forward to whoever is calling it.
+
+	- Models: The schema models for the database.
+
+	- Routes: The endpoints.
+
+
+* Basic routing endpoints
+-------------------------
+
+Any application, Frot-End of Back-End needs routes in order to be able to call a URL and get something back in a web applicataion.  You can call a route and go to a specific page
+or you can also use routes to define your endpoints in an application.
+
+	1) import routes from './src/routes/crmRoute';
+
+	2) Pass the app inside of routes:
+	
+index.js
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+import express from 'express';
+import routes from './src/routes/crmRoute';
+
+const app = express();
+const PORT = 3000;
+
+routes(app);
+
+//This is the first endpoint
+app.get('/', (req, res) => {
+    res.send(`Node and Express server is running on port ${PORT}`);
+});
+
+app.listen(PORT, () => {
+    console.log(`Your server is running on port ${PORT}`);
+})
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+crmRoutes.js
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const routes = (app) => {
+    app.route('/contact')
+    .get((req, res) => 
+        res.send('GET request sucessful!')
+    )
+
+    .post((req, res) => 
+        res.send('POST request sucessful!')
+    )
+    
+    app.route('/contact/:contactId')
+        .put((req, res) => 
+    res.send('PUT request sucessful!')
+    )
+
+    .delete((req, res) => 
+        res.send('DELETE request sucessful!')
+    )
+}
+
+export default routes;
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now is possible to test this endpoints in POSTMAN.
+
+localhost:3000/contact
+
+localhost:3000/contact/473
+
+
+* Basics of middleware and uses
+-------------------------------
+
+- Middleware: Middleware are simple functions that have access to the request and response object in our Express application and can run their code there. 
+              Middleware can make changes to the request/response objects, can end those objects, can call another function in the stack using -> next -> functions
+	      etcetera.
+
+	Example in one of our endpoints:
+		Let's add middleware in our get endpoint.  This is just a console.log example.  Middleware is often used to call the functions and other things.
+
+
+crmRoutes.js
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const routes = (app) => {
+    app.route('/contact')
+    .get((req, res, next) => {
+            //middleware
+            console.log(`Request from: ${req.originalUrl}`);
+            console.log(`Request type: ${req.method}`);
+            next();
+        }, (req, res, next) => {
+            res.send('GET request successful!')
+    })
+
+    .post((req, res) => 
+        res.send('POST request sucessful!')
+    )
+    
+    app.route('/contact/:contactId')
+        .put((req, res) => 
+    res.send('PUT request sucessful!')
+    )
+
+    .delete((req, res) => 
+        res.send('DELETE request sucessful!')
+    )
+}
+
+export default routes;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
 
