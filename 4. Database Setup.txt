@@ -1,0 +1,97 @@
+DATABASE SETUP
+**************
+
+* MongoDB basics refresher
+--------------------------
+
+- MongoDB Database: One big object containing collections, and each collection is a contextual item.
+
+- Collections: Inside the collections we have documents or objects.
+
+- Document: Looks like a JSON object with a key value pair approach or arrays of data.
+
+- Mongoose: Allow us to set up a schema for a collection and predefine what each key value pair takes as type.  For example, the first name of a contact will take a string.
+
+- Robo3T or Studio 3T: Tool used to test our MongoDB and make sure the data we have in our database matches the calls we make to the endpoints.
+	
+	- Click on connect.
+	- URL: Localhost/27017
+	- Connect to the database.
+
+	Once we start adding some data into our database, we are going to see whatever collection we are adding, and we are going to be able to check or test that the endpoints
+	we are using with our server are actually sending data to our database.
+
+
+* Database setup
+----------------
+
+In index.js
+
+1) import mongoose from 'mongoose';
+   import bodyParser from 'body-parser';
+
+2) 
+//mongoose connection (This means the mongodb connection, but we are using mongoose to make the code more suscint and shorter)
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/CRMdb', {
+    useNewUrlParser: true
+});
+
+3) This will allow us to do the back and forth between our server and our Mongo Database.
+//bodyparser setup
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+* Schema setup
+--------------
+
+- Schema: We need to create it before we start adding data to our database.  The schema is what dictates the types of data and the structure of the data, the database takes.
+	  Defines the rules.
+
+crmModel.js
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+import mongoose from 'mongoose';
+
+const Schema = mongoose.Schema;
+
+export const ContactSchema = new Schema({
+    firstName: {
+        type: String,
+        required: 'Enter a first name'
+    },
+    lastName: {
+        type: String,
+        required: 'Enter a last name'
+    },
+    email: {
+        type: String
+    },
+    company: {
+        type: String
+    },
+    phone: {
+        type: Number
+    },
+    created_date: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+   
+
+
+
+
+
+
+
+
+
+
+
+

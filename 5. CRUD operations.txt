@@ -1,0 +1,275 @@
+CRUD OPERATIONS
+***************
+
+* Create POST endpoint
+----------------------
+
+1) In crmControllers.js we are going to write the functions that will send the data to the database and update the data and so on and so forth, 
+and then we will use the endpoint as the kind of portal to do it.
+
+This is our first controller:
+
+crmControllers.js
+-----------------
+
+import mongoose from 'mongoose';
+import { ContactSchema } from '../models/crmModel';
+
+const Contact = mongoose.model('Contact', ContactSchema);
+
+export const addNewContacts = (req, res) => {
+    let newContact = new Contact(req.body)
+
+    newContact.save((err, contact) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(contact);
+    })
+}
+
+It's necessary to change this, because MONGODB doesn't accept any more callbacks:
+
+import mongoose from 'mongoose';
+import { ContactSchema } from '../models/crmModel';
+
+const Contact = mongoose.model('Contact', ContactSchema);
+
+export const addNewContact = async (req, res) => {
+    let newContact = new Contact(req.body)
+    let contact = await newContact.save();
+    res.json(contact);
+}
+
+2) Now we need to go to routes and be sure that this is passed to the endpoint.
+
+crmRoutes.js
+------------
+
+import { addNewContacts } from "../controllers/crmController";
+
+const routes = (app) => {
+    app.route('/contact')
+    .get((req, res, next) => {
+            //middleware
+            console.log(`Request from: ${req.originalUrl}`);
+            console.log(`Request type: ${req.method}`);
+            next();
+        }, (req, res, next) => {
+            res.send('GET request successful!')
+    })
+
+    .post(addNewContacts);
+    
+    
+    app.route('/contact/:contactId')
+        .put((req, res) => 
+    res.send('PUT request sucessful!')
+    )
+
+    .delete((req, res) => 
+        res.send('DELETE request sucessful!')
+    )
+}
+
+export default routes;
+
+3) Remember for testing in POSTMAN.  We put the information to send to the database in the body.
+	- Select x-www-form-urlencoded
+	- For the example, enter firstName, lastName, company, phone
+
+
+* Create all items GET endpoint
+-------------------------------
+
+1) export const getContacts = async (req, res) => {
+    let Contacts = await Contact.find({});
+    res.json(Contacts);
+}
+
+2) crmRoutes.js
+---------------
+
+import { addNewContact, getContacts } from "../controllers/crmController";
+
+
+const routes = (app) => {
+    app.route('/contact')
+    .get((req, res, next) => {
+            //middleware
+            console.log(`Request from: ${req.originalUrl}`);
+            console.log(`Request type: ${req.method}`);
+            next();
+        }, getContacts)
+
+    .post(addNewContact);
+    
+    
+    app.route('/contact/:contactId')
+        .put((req, res) => 
+    res.send('PUT request sucessful!')
+    )
+
+    .delete((req, res) => 
+        res.send('DELETE request sucessful!')
+    )
+}
+
+export default routes;
+
+
+* Create specific ID GET endpoint
+
+1) export const getContactWithID = async (req, res) => {
+    let Result = await Contact.findById(req.params.contactId);
+    res.json(Result);
+}
+
+2) crmRoutes.js
+---------------
+
+import { addNewContact, getContacts, getContactWithID} from "../controllers/crmController";
+
+
+const routes = (app) => {
+    app.route('/contact')
+    //get all contacts
+    .get((req, res, next) => {
+            //middleware
+            console.log(`Request from: ${req.originalUrl}`);
+            console.log(`Request type: ${req.method}`);
+            next();
+        }, getContacts)
+
+    //post a new contact
+    .post(addNewContact);
+    
+    app.route('/contact/:contactId')
+        //get specific contact 
+        .get(getContactWithID)
+        
+        .put((req, res) => 
+            res.send('PUT request sucessful!')
+    )
+
+    .delete((req, res) => 
+        res.send('DELETE request sucessful!')
+    )
+}
+
+export default routes;
+
+* Create PUT endpoint
+---------------------
+
+1) export const updateContact = async (req, res) => {
+    let Result = await Contact.findOneAndUpdate({ _id: req.params.contactId}, req.body, { new: true});
+    res.json(Result);
+}
+
+2) crmRoutes.js
+
+import { addNewContact, getContacts, getContactWithID, updateContact} from "../controllers/crmController";
+
+
+const routes = (app) => {
+    app.route('/contact')
+    //get all contacts
+    .get((req, res, next) => {
+            //middleware
+            console.log(`Request from: ${req.originalUrl}`);
+            console.log(`Request type: ${req.method}`);
+            next();
+        }, getContacts)
+
+    //post a new contact
+    .post(addNewContact);
+    
+    app.route('/contact/:contactId')
+        //get specific contact 
+        .get(getContactWithID)
+        
+        //Update a contact
+        .put(updateContact)
+    
+
+    .delete((req, res) => 
+        res.send('DELETE request sucessful!')
+    )
+}
+
+export default routes;
+
+
+* Create DELETE endpoint
+------------------------
+
+1) export const deleteContact = async (req, res) => { 
+    await Contact.deleteOne({ _id: req.params.contactId }); 
+    res.json({ message: "Successfully deleted contact" }); 
+};
+
+2) crmRoutes.js
+---------------
+
+import { addNewContact, getContacts, getContactWithID, updateContact, deleteContact} from "../controllers/crmController";
+
+
+const routes = (app) => {
+    app.route('/contact')
+        //get all contacts
+        .get((req, res, next) => {
+                //middleware
+                console.log(`Request from: ${req.originalUrl}`);
+                console.log(`Request type: ${req.method}`);
+                next();
+            }, getContacts)
+
+        //post a new contact
+        .post(addNewContact);
+    
+    app.route('/contact/:contactId')
+        //get specific contact 
+        .get(getContactWithID)
+        
+        //Update a contact
+        .put(updateContact)
+    
+        //Delete contact
+        .delete(deleteContact)
+}
+
+export default routes;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
