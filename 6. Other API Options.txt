@@ -1,0 +1,33 @@
+OTHER API OPTIONS
+*****************
+
+* Static Files Serving
+----------------------
+
+With an express-based server it is possible to serve static files (images, etc).
+
+1) The only that you need to do, to serve static files, is going to index.js and add these lines of code:
+
+	//Serving static files
+	app.use(express.static('public'));
+
+2) To test that is working, the only you need to do is to open a browser, adding the localhost and the name of the static file:
+	
+	localhost:3000/football.jpeg
+
+Now, any files that are in the declared static folder will be available to any front end that needs it.
+
+
+* Other potential libraries for API
+-----------------------------------
+
+- KOAJ: Next generation Web Framework for Node.js
+	Uses generators instead of callbacks.
+	They also remove Middlewares to make the library smaller.
+
+- SWAGGER / LOOPBACK: Provide full-fledge pre-built APIS.  This are API generators where you can easily build a backend server with all your API endpoints with a few 
+	CLI commands.
+
+
+
+	
